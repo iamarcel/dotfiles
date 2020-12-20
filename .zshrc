@@ -84,7 +84,7 @@ test -e "$HOME/.asdf/completions/asdf.bash" && source "$HOME/.asdf/completions/a
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 test -e "${HOME}/dev/torch/install/bin/torch-activate" && source "${HOME}/dev/torch/install/bin/torch-activate"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/home/marcel/.platformio/penv/bin:$PATH"
 
 # Base16 via base16-manager
 test -e "${HOME}/.base16_theme" && source "${HOME}/.base16_theme"
