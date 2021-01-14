@@ -7,7 +7,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Marcel Samyn"
-      user-mail-address "marcel.samyn@lab900.com")
+      user-mail-address "marcel@samyn.co")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -21,19 +21,15 @@
 ;; font string. You generally only need these two:
 ;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-(setq-default mac-allow-anti-aliasing t)
-;; (setq doom-font (font-spec :family "ProFontIIx Nerd Font Mono" :size 9 :antialias nil))
-(setq doom-font (font-spec :family "IBM Plex Mono" :size 12))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-gruvbox-light)
+(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
-(load "~/org/config")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -57,21 +53,23 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(setq doom-localleader-key "\\")
+;; CEDET setup
+;; (require 'semantic)
+;; (global-semanticdb-minor-mode 1)
+;; (global-semantic-idle-scheduler-mode 1)
+;; (semantic-mode 1)
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(setq lsp-clients-typescript-server-args '("--stdio" "--tsserver-log-verbosity=verbose" "--tsserver-log-file=/Users/marcel/tmp/tsserver.log")
-      lsp-clients-typescript-log-verbosity "verbose"
-      )
+(require 'platformio-mode)
 
-;; (setq lsp-eslint-server-command
-;;    '("node"
-;;      "/home/marcel/.vscode/extensions/dbaeumer.vscode-eslint-2.1.8/server/out/eslintServer.js"
-;;      "--stdio"))
+;; (add-to-list 'auto-mode-alist '("\\.ino\\'" . platformio-mode))
+(add-to-list 'auto-mode-alist '("\\.ino\\'" . c++-mode))
+
+;; Enable irony for all c++ files, and platformio-mode only
+;; when needed (platformio.ini present in project root).
+(add-hook 'c++-mode-hook (lambda ()
+                           (platformio-conditionally-enable)))
 
 
-(set-docsets! 'js2-mode "JavaScript" "TypeScript")
-(set-docsets! 'rjsx-mode :add "React")
-(setq display-line-numbers nil)
-
-(setq magit-git-executable "/usr/local/bin/git")
+(use-package! counsel
+  :custom
+  (counsel-linux-app-format-function #'counsel-linux-app-format-function-name-only))
