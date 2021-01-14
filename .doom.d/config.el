@@ -7,7 +7,7 @@
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "Marcel Samyn"
-      user-mail-address "marcel@samyn.co")
+      user-mail-address "marcel.samyn@lab900.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -19,26 +19,31 @@
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
-(setq doom-font (font-spec :family "Input Mono" :size 11))
+;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
+;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq-default mac-allow-anti-aliasing t)
+;; (setq doom-font (font-spec :family "ProFontIIx Nerd Font Mono" :size 9 :antialias nil))
+(setq doom-font (font-spec :family "IBM Plex Mono" :size 12))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one-light)
+(setq doom-theme 'doom-gruvbox-light)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
+(load "~/org/config")
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type nil)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
-;; - `use-package' for configuring packages
+;; - `use-package!' for configuring packages
 ;; - `after!' for running code after a package has loaded
 ;; - `add-load-path!' for adding directories to the `load-path', relative to
 ;;   this file. Emacs searches the `load-path' when you load packages with
@@ -46,29 +51,27 @@
 ;; - `map!' for binding new keys
 ;;
 ;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
 ;;
-;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Clang-format on save
-(add-hook 'before-save-hook
-  (lambda ()
-    (when (member major-mode '(c-mode c++-mode glsl-mode))
-      (progn
-        (when (locate-dominating-file "." ".clang-format")
-          (clang-format-buffer))
-        ;; Return nil, to continue saving.
-        nil))))
+(setq doom-localleader-key "\\")
 
-;; Set up Angular LSP
-(setq lsp-clients-angular-language-server-command
-      '("node"
-        "/home/marcel/.config/yarn/global/node_modules/@angular/language-server"
-        "--ngProbeLocations"
-        "/home/marcel/.config/yarn/global/node_modules"
-        "--tsProbeLocations"
-        "/home/marcel/.config/yarn/global/node_modules"
-        "--stdio"
-        ))
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+(setq lsp-clients-typescript-server-args '("--stdio" "--tsserver-log-verbosity=verbose" "--tsserver-log-file=/Users/marcel/tmp/tsserver.log")
+      lsp-clients-typescript-log-verbosity "verbose"
+      )
+
+;; (setq lsp-eslint-server-command
+;;    '("node"
+;;      "/home/marcel/.vscode/extensions/dbaeumer.vscode-eslint-2.1.8/server/out/eslintServer.js"
+;;      "--stdio"))
+
+
+(set-docsets! 'js2-mode "JavaScript" "TypeScript")
+(set-docsets! 'rjsx-mode :add "React")
+(setq display-line-numbers nil)
+
+(setq magit-git-executable "/usr/local/bin/git")

@@ -1,7 +1,11 @@
 [user]
 	name = Marcel Samyn
-	email = dev@mrcl.io
+	email = marcel.samyn@lab900.com
 [push]
 	default = simple
 [credential]
-	helper = cache
+	helper = osxkeychain
+[pull]
+	rebase = false
+[gpg]
+	program = gpg2
