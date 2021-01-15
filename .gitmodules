@@ -1,6 +1,6 @@
-[submodule "spacemacs"]
+[submodule "doom-emacs"]
 	path = .emacs.d
-	url = https://github.com/syl20bnr/spacemacs
+	url = https://github.com/hlissner/doom-emacs
 [submodule ".zplug"]
 	path = .zplug
 	url = https://github.com/zplug/zplug.git
