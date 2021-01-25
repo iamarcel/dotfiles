@@ -7,7 +7,7 @@
  '(+org-capture-notes-file (concat org-directory "notes.org") t)
  '(+org-capture-todo-file (concat org-directory "do.org") t)
  '(custom-safe-themes
-   '("2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "8d7684de9abb5a770fbfd72a14506d6b4add9a7d30942c6285f020d41d76e0fa" "f7216d3573e1bd2a2b47a2331f368b45e7b5182ddbe396d02b964b1ea5c5dc27" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "711efe8b1233f2cf52f338fd7f15ce11c836d0b6240a18fffffc2cbd5bfe61b0" "37144b437478e4c235824f0e94afa740ee2c7d16952e69ac3c5ed4352209eefb" "99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default))
+   '("93ed23c504b202cf96ee591138b0012c295338f38046a1f3c14522d4a64d7308" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "4a8d4375d90a7051115db94ed40e9abb2c0766e80e228ecad60e06b3b397acab" "7a994c16aa550678846e82edc8c9d6a7d39cc6564baaaacc305a3fdc0bd8725f" "2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "8d7684de9abb5a770fbfd72a14506d6b4add9a7d30942c6285f020d41d76e0fa" "f7216d3573e1bd2a2b47a2331f368b45e7b5182ddbe396d02b964b1ea5c5dc27" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "711efe8b1233f2cf52f338fd7f15ce11c836d0b6240a18fffffc2cbd5bfe61b0" "37144b437478e4c235824f0e94afa740ee2c7d16952e69ac3c5ed4352209eefb" "99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" default))
  '(org-capture-templates
    `(("t" "Todo" entry
       (file+headline +org-capture-todo-file "Inbox")
@@ -53,7 +53,7 @@
  %a" :heading "Notes" :prepend t)
      ("oc" "Project changelog" entry #'+org-capture-central-project-changelog-file "* %U %?
  %i
- %a" :heading "Changelog" :prepend t)))
+ %a" :heading "Changelog" :prepend t)) t)
  '(package-selected-packages '(edn))
  '(warning-suppress-types '((lsp-mode) (lsp-mode))))
 (custom-set-faces

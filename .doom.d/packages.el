@@ -50,3 +50,6 @@
 ;(unpin! t)
 
 (package! org-journal)
+(package! platformio-mode)
+(package! exwm)
+(package! desktop-environment)
