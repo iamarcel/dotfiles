@@ -1,0 +1,117 @@
+;; edn spec https://github.com/edn-format/edn
+
+;; means mandatory -   modifier(s) alone when pressend change behavior
+;; #  | means optional  -   modifiers are optional (but atleast one necessary)
+
+;; :!Ca is keycode :a and prefix a with !C
+
+;; C  | left_command
+;; T  | left_control
+;; O  | left_option
+;; S  | left_shift
+;; F  | fn
+;; Q  | right_command
+;; W  | right_control
+;; E  | right_option
+;; R  | right_shift
+
+;; ## | optional any (this has no effect when used on the RHS; only LHS)
+;; !! | command + control + optional + shift (hyper)
+
+{;;;; define things
+ ;; define devices
+ :devices {}
+ ;; define application identifiers
+ :applications {:chrome ["^com\\.google\\.Chrome$"]
+                :chrome-canary [ "^com\\.google\\.Chrome\\.canary$"]
+                :chromes ["^com\\.google\\.Chrome$" "^com\\.google\\.Chrome\\.canary$"]}
+
+ :input-sources {:us {:input_mode_id ""
+                      :input_source_id "com.apple.keylayout.US"
+                      :language "en"}}
+
+ :templates {:alfred "osascript -e 'tell application \"Alfred 4\" to run trigger \"%s\" in workflow \"%s\" with argument \"%s\"'"
+             :km "osascript -e 'tell application \"Keyboard Maestro Engine\" to do script \"%s\"'"
+             :open "open \"%s\""}
+ ;; define alias for modifers
+ :modifiers {}
+
+ ;; define froms
+ ;; use in <from>
+ :froms {}
+
+ ;; define tos
+ ;; use in <to>
+ :tos {}
+
+ :profiles
+  {:Default {:default true
+          :alone   300 ; hold for .. ms to register single tap
+          :held    50 ; TODO: not sure what it's for
+          :delay   0 ; time after which the key press is delayed
+          :sim     10 }} ; keys need to be pressed within this threshold to be considered simultaneous
+
+ ;;;; helper function to generate things little bit quicker
+ ;; quick define "layers" or "state" feature(use set_variable)
+ ;; can use as conditions in rule list
+ ;; {:<layer name> {:from <froms>}}
+ :layers {
+   :caps-mode {:key :caps_lock :alone {:key :escape}}
+ }
+
+ ;; main list
+ :main
+ ;; [<from> <to>] or
+ ;; [<from> <to> <conditions>] or
+ ;; [<from> <to> <conditions> <other options>]
+ ;; <from> can be keywords defined in froms or keycodes without `{:not-from true}`
+ ;; <to> can be keywords defined in tos, keycodes without `{:not-to true}`, string (shell script)
+ ;; <conditions> can be keywords defined in layers, devices, applications
+ ;; <other options> {:other {:parameters {:to_delayed_action_delay_milliseconds 100 :basic.to_if_alone_timeout_milliseconds 500 :basic.to_if_held_down_threshold_milliseconds 250}} }
+ [
+    ;; each manipulator has a description and multiple rules
+
+    ;;{:des "..."                               ;; -> description
+    ;; :rules[
+    ;;          [<from>  <to>  <conditions>]    ;; -> rule 1
+    ;;          [<from>  <to>  <conditions>]    ;; -> rule 2
+    ;; ]}
+
+    ;; rule [:period ["period-mode" 1] nil {:afterup ["period-mode" 0] :alone :period}]
+    ;;       |_____| |_______________| |_| |_________________________________________|
+    ;;        <from>    <to>      <conditions>         <other options>
+    ;;
+    ;; karabiner docs: ;; https://pqrs.org/osx/karabiner/json.html#complex_modifications-manipulator-definition
+    ;; <other options> includs ~to_if_alone~, ~to_if_held_down~,~to_after_key_up~, ~to_delayed_action~ and ~parameters~.
+    ;;
+
+    ;; (custom variables) & modifiers -> Advanced
+    ;; https://github.com/yqrashawn/GokuRakuJoudo/blob/master/examples.org#custom-variable
+
+    {:des "Caps Mode" :rules [:caps-mode
+        [:f [:km "open: Firefox"]]
+        [:e [:km "open: Emacs"]]
+        [:s [:km "open: Slack"]]
+        [:m [:km "open: Spotify"]]
+        [:t [:km "open: iTerm"]]
+        [:n [:km "open: Evernote"]]
+        [:d [:km "open: Dashlane"]]
+    ]}
+  ] ;; h to 8 and set_variable
+
+ ;; code won't read cheatsheet section
+ ;; ! stand for mandatory
+ ;; # stand for optional
+ ;; C T O S for left command control optional shift
+ ;; F for fn
+ ;; need to prefix C T O S F with ! or #
+ :cheatsheet {:!Ca "command a" ;; mandatory left_command
+              :!Ta "control a" ;; mandatory left_control
+              :!Oa "option a"
+              :!Sa "shift a"
+              :#Sa "shift a" ;; keycode a, optional left_shift
+              :!CTOa "command control option a"
+              :!Cspacebar "command space"
+              :!Fa "fn a"
+              :##a "keycode a optional any"
+              :!!a "mandatory hyper(control command option shift) a "}}
